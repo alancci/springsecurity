@@ -22,6 +22,11 @@ public class LoginController {
 
         return "views/login";
     }
+    @RequestMapping("/logout")
+    public String logout(){
+
+        return "index";
+    }
 
     @RequestMapping("/level1/{id}")
     public String level1(@PathVariable("id") int id){

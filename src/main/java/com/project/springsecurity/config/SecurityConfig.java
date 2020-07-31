@@ -20,7 +20,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
  *         SecurityConfig：继承WebSecurityConfiguerAdapter 重写configure方法
  *              实现HttpSecurity的 定义请求授权规则 定义角色
  *              实现AuthenticationManagerBuilder的 定义认证规则 给用户分配角色 注意要对前端传过来的密码进行加密
- *              BCrypt官方推荐加密方式 
+ *              BCrypt官方推荐加密方式
  * @author  alancci
  * @date   2020/7/31 9:24
  */
@@ -46,6 +46,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/level1/**").hasRole("vip1")
                 .antMatchers("/level2/**").hasRole("vip2")
                 .antMatchers("/level3/**").hasRole("vip3");
-        http.formLogin();
+        http.formLogin()
+                .usernameParameter("username")
+                .passwordParameter("password")
+                .loginPage("/toLogin")
+                .loginProcessingUrl("/login");
+        http.logout().logoutSuccessUrl("/");
+        http.rememberMe().rememberMeParameter("remember");
     }
 }
